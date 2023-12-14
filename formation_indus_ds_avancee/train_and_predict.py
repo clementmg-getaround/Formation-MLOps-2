@@ -1,5 +1,6 @@
 import os
 import time
+import datetime
 
 import joblib
 import pandas as pd
@@ -18,7 +19,9 @@ def train_model(features: pd.DataFrame, model_registry_folder: str) -> None:
     y = features[target]
     model = RandomForestRegressor(n_estimators=1, max_depth=10, n_jobs=1)
     model.fit(X, y)
-    joblib.dump(model, os.path.join(model_registry_folder, 'model.joblib'))
+    timestamp = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    model_versioned = f"model-{timestamp}"
+    joblib.dump(model, os.path.join(model_registry_folder, model_versioned))
 
 
 def predict_with_io(features_path: str, model_path: str, predictions_folder: str) -> None:
