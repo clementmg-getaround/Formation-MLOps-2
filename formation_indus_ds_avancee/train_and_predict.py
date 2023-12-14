@@ -14,6 +14,7 @@ def train_model_with_io(features_path: str, model_registry_folder: str) -> None:
 
 
 def train_model(features: pd.DataFrame, model_registry_folder: str) -> None:
+    mlflow.set_tracking_uri("http://0.0.0.0:42513")
     target = 'Ba_avg'
     X = features.drop(columns=[target])
     y = features[target]
